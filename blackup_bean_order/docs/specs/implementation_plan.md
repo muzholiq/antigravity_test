@@ -1,11 +1,14 @@
-# 원두 주문 관리 자동화 시스템 설계 (v5 — 3-Agent 토론 반영)
+# 원두 주문 관리 자동화 시스템 설계 (v6 — 구현 토론 + 사용성 토론 반영)
 
-원두 생산/배송 관리자가 Google Sheets에 입력된 매장 주문 데이터를 Antigravity 에이전트로 자동 정리하는 시스템입니다.
+원두 생산/배송 관리자(로스터)가 Antigravity 에이전트를 직접 사용하여 Google Sheets의 매장 주문 데이터를 자동 정리하는 시스템입니다.
 
 > [!NOTE]
-> **v5 변경사항**: v4 설계에 Modeling Lead × Product Lead × Tech Lead 3자 토론(10라운드) 결과를 반영
-> - 코드 실행 분리, 프롬프트 엔지니어링, 사전 헬스체크, 보안 가이드, 출력 형식 고정, 에이전트 설정 변경 지원
-> - 관련 토론: [`three_agent_debate.md`](file:///Users/sangwook/Documents/workspace/repo/antigravity_test/blackup_bean_order/docs/debates/three_agent_debate.md)
+> **v6 변경사항**: v5 설계에 다음 토론 결과를 반영
+> - 구현 토론(10R): 코드 실행 인터페이스, 가드레일 재정의, 리포트 저장 Step 7, 대화형 템플릿
+> - 사용성 토론(10R): YAML 직접 편집 제거, 대화형 설정 변경, 첫 실행 안내
+> - 시나리오 A 확정: 로스터 1인이 Antigravity 직접 사용
+> - 파일 구조 개편: `.agent/instructions/` + `.agent/skills/` 분리
+> - 관련 토론: [`three_agent_debate.md`](file:///Users/sangwook/Documents/workspace/repo/antigravity_test/blackup_bean_order/docs/debates/three_agent_debate.md), [`implementation_review_debate.md`](file:///Users/sangwook/Documents/workspace/repo/antigravity_test/blackup_bean_order/docs/debates/implementation_review_debate.md), [`settings_usability_debate.md`](file:///Users/sangwook/Documents/workspace/repo/antigravity_test/blackup_bean_order/docs/debates/settings_usability_debate.md)
 
 ## 확정 사항
 
@@ -87,37 +90,44 @@ flowchart LR
 
 ## Proposed Changes
 
-### 프로젝트 디렉토리 구조
+### 프로젝트 디렉토리 구조 (v6 업데이트)
 
-> **프로젝트 루트**: `repo/antigravity_test/blackup_bean_order/`
+> **프로젝트 루트**: `repo/antigravity_test/`
 
 ```
+.agent/
+├── instructions/
+│   └── order_manager.md       # 에이전트 실행 가이드 (핵심)
+└── skills/
+    └── order_manager.json     # /order-report 스킬 정의
+
 blackup_bean_order/
-├── .agent/skills/order-manager/
-│   └── SKILL.md              # Skill 정의 (에이전트 가이드)
 ├── config/
-│   └── settings.yaml          # Sheets URL, 매장/원두 마스터 목록
+│   ├── settings.yaml          # 에이전트가 자동 관리 (사용자 직접 편집 금지)
+│   └── settings.yaml.example  # 스키마 참고용 (개발자용)
 ├── templates/
-│   └── daily_report.md        # 리포트 출력 템플릿
+│   └── daily_report.md        # 리포트 참고 형식 (예시 포함)
 ├── examples/
-│   ├── sample_sheet_data.md   # 샘플 데이터 참고용
-│   ├── test_normal.md         # [v4 NEW] 정상 시나리오 테스트
-│   ├── test_warnings.md       # [v4 NEW] 경고 시나리오 테스트
-│   └── test_edge_cases.md     # [v4 NEW] 엣지 케이스 테스트
+│   ├── sample_sheet_data.md   # 샘플 데이터
+│   ├── test_normal.md         # 골든 테스트 #1 정상
+│   ├── test_warnings.md       # 골든 테스트 #2 경고
+│   └── test_edge_cases.md     # 골든 테스트 #3 엣지
+├── reports/                    # 리포트 출력 폴더 (YYYY-MM/)
 └── docs/
-    ├── specs/                 # 설계 스펙 문서
-    ├── reviews/               # 설계 비판/리뷰
-    └── debates/               # 토론 기록
+    ├── specs/                 # 설계 스펙
+    ├── reviews/               # 설계 비판
+    └── debates/               # 토론 기록 (5건)
 ```
 
 > [!TIP]
-> 스크립트 0개! 모든 로직은 `SKILL.md`에 가이드로 작성하고 에이전트가 실행합니다.
+> 스크립트 0개! 모든 로직은 `order_manager.md`에 가이드로 작성하고 에이전트가 실행합니다.
+> 설정 변경은 사용자가 대화로 요청 → 에이전트가 settings.yaml을 자동 수정합니다.
 
 ---
 
-### SKILL.md (Core)
+### order_manager.md (Core)
 
-#### [NEW] [SKILL.md](file:///Users/sangwook/Documents/workspace/repo/antigravity_test/blackup_bean_order/.agent/skills/order-manager/SKILL.md)
+#### [MOVED] [order_manager.md](file:///Users/sangwook/Documents/workspace/repo/antigravity_test/.agent/instructions/order_manager.md)
 
 에이전트의 전체 동작을 안내하는 스킬 정의 파일.
 

@@ -1,0 +1,31 @@
+{
+  "name": "bean_order_manager",
+  "description": "블랙업 커피 로스터스의 매장 원두 주문을 자동으로 수집·집계·리포트합니다. Google Sheets에서 각 매장 주문 데이터를 읽어 일일 요약, 원두별 합산, 배송 스케줄 리포트를 생성합니다.",
+  "command": "/order-report",
+  "trigger_phrases": ["주문 정리해줘", "오늘 주문 리포트", "원두 주문 집계", "배송 스케줄 만들어줘", "주문 요약해줘"],
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "date": {
+        "type": "string",
+        "description": "처리할 주문 날짜 또는 기간입니다. (예: '2026-02-15', '2/13~2/15', '오늘', '이번 주')"
+      },
+      "stores": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "처리할 매장 목록입니다. 미지정 시 settings.yaml의 전체 매장을 처리합니다."
+      },
+      "output_mode": {
+        "type": "string",
+        "enum": ["daily", "combined"],
+        "default": "daily",
+        "description": "복수일 처리 시 출력 방식. daily=일자별 분리, combined=합산"
+      }
+    },
+    "required": []
+  },
+  "instruction_reference": "order_manager.md",
+  "config_path": "blackup_bean_order/config/settings.yaml",
+  "template_path": "blackup_bean_order/templates/daily_report.md",
+  "test_data_path": "blackup_bean_order/examples/"
+}
