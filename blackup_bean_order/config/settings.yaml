@@ -1,0 +1,127 @@
+# ============================================================
+# ⚠️  이 파일을 직접 수정하지 마세요!
+# ============================================================
+# 설정을 변경하고 싶으면 에이전트에게 말로 요청하세요.
+# 예시:
+#   "해운대점 Sheets URL 바꿔줘"
+#   "에티오피아 하라 원두 추가해줘"
+#   "에티오피아 예가체프 재고 50kg으로 업데이트해줘"
+#   "원가 리포트 켜줘"
+#
+# 에이전트가 변경 미리보기를 보여준 후 확인을 받고 안전하게 수정합니다.
+# ============================================================
+version: 1
+
+# --- 로스터리 정보 ---
+roastery:
+  name: "블랙업 커피 로스터스"
+  code: "BLACKUP"
+
+# --- 매장 목록 (매장별 별도 Google Sheets) ---
+# ⚠️ sheet_url의 SHEET_ID_XX 부분을 실제 Sheets ID로 교체하세요.
+# 에이전트에게 "해운대점 Sheets URL 등록해줘"라고 말하면 대화형으로 등록됩니다.
+
+stores:
+  # === 부산 (5개) ===
+  - name: "로스터리"
+    code: "RST"
+    sheet_url: "https://docs.google.com/spreadsheets/d/1WqvKuZqunDhIF1pyqC1UBb-lr7szpR4FtBr7Ghkvfro/edit?gid=0#gid=0"
+    zone: "부산진구"
+    address: "부산진구 신천대로 108"
+
+  - name: "서면 본점"
+    code: "SM"
+    sheet_url: "https://docs.google.com/spreadsheets/d/1l1IVcvIFgVFpiC-zuD-ZzM-TLSCSWw8v6kDSfuabyxA/edit?gid=0#gid=0"
+    zone: "부산진구"
+    address: "부산진구 서전로10번길 41"
+
+  - name: "해운대"
+    code: "HD"
+    sheet_url: "https://docs.google.com/spreadsheets/d/1JfoZZ7aj7rq7GkzG08vPWf0h0gjBPbGqTR-mxaXDlQ8/edit?gid=0#gid=0"
+    zone: "해운대구"
+    address: "해운대구 중동2로 16 1층"
+
+  - name: "을숙도"
+    code: "ESD"
+    sheet_url: "https://docs.google.com/spreadsheets/d/1H7fhIkYsxApHkG_lI-TpCW8ayrVo6LPru8W4STO_ltA/edit?gid=0#gid=0"
+    zone: "사하구"
+    address: "사하구 낙동남로 1233번길 30"
+
+  - name: "롯데 광복"
+    code: "LGR"
+    sheet_url: "https://docs.google.com/spreadsheets/d/1DqvHpzDjIKTg5TO_HBnmeGHF7LyYsOxzjK1rPc1LS4k/edit?gid=0#gid=0"
+    zone: "중구"
+    address: "중구 중앙대로 2 아쿠아몰 B1"
+
+  # === 경남 (3개) ===
+  - name: "양산"
+    code: "YS"
+    sheet_url: "https://docs.google.com/spreadsheets/d/SHEET_ID_YS"
+    zone: "양산시"
+    address: "양산시 물금읍 물금리 376-12"
+
+  - name: "거제 수월"
+    code: "GSW"
+    sheet_url: "https://docs.google.com/spreadsheets/d/SHEET_ID_GSW"
+    zone: "거제시"
+    address: "거제시 제산안길 18"
+
+  - name: "고현"
+    code: "GH"
+    sheet_url: "https://docs.google.com/spreadsheets/d/SHEET_ID_GH"
+    zone: "거제시"
+    address: "거제시 서문로5길 6 1층"
+
+  # === 울산 (2개) ===
+  - name: "울산 옥동"
+    code: "UOD"
+    sheet_url: "https://docs.google.com/spreadsheets/d/SHEET_ID_UOD"
+    zone: "울산남구"
+    address: "남구 법대로14번길 21"
+
+  - name: "울산 현대백화점"
+    code: "UHD"
+    sheet_url: "https://docs.google.com/spreadsheets/d/SHEET_ID_UHD"
+    zone: "울산남구"
+    address: "남구 삼산로 261 별관 3층"
+
+# --- 원두 마스터 목록 ---
+# stock_kg: 현재 가용 재고 (로스팅 전 생두 기준, 정기 업데이트 필요)
+# cost_per_kg: 생두 원가 (₩). enable_cost_report: true일 때만 리포트에 노출
+beans:
+  - name: "에티오피아 예가체프"
+    name_en: "Ethiopia Yirgacheffe"
+    code: "ETH-YRG"
+    stock_kg: 30
+    cost_per_kg: 25000
+
+  - name: "콜롬비아 수프리모"
+    name_en: "Colombia Supremo"
+    code: "COL-SUP"
+    stock_kg: 15
+    cost_per_kg: 22000
+
+  - name: "브라질 산토스"
+    name_en: "Brazil Santos"
+    code: "BRA-SAN"
+    stock_kg: 25
+    cost_per_kg: 18000
+
+# --- 로스팅 프로파일 매핑 ---
+roasting_profiles:
+  라이트: "L-STD"
+  미디엄: "M-STD"
+  다크: "D-STD"
+
+# --- 글로벌 설정 ---
+min_lead_days: 2
+max_order_kg: 50
+read_only: true
+
+enable_cost_report: false
+
+# --- 출력할 리포트 종류 ---
+reports:
+  - daily_summary
+  - bean_totals
+  - delivery_schedule

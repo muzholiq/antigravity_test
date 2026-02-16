@@ -206,6 +206,3 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# Blackup Bean Order — 실제 설정 파일 (Sheets URL 포함)
-blackup_bean_order/config/settings.yaml
-blackup_bean_order/config/settings.yaml.*.bak
