@@ -1,0 +1,32 @@
+{
+  "name": "service_strategy_audit",
+  "description": "서비스 기획안의 비즈니스 논리, 유저 경험(UX), 시장성 및 윤리적 타당성을 전문적으로 비판하고 고도화합니다.",
+  "command": "/plan-review",
+  "trigger_phrases": ["기획안 검토해줘", "UX 분석해줘", "서비스 로직 비판해줘", "비즈니스 모델 확인"],
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "context": {
+        "type": "string",
+        "description": "사용자가 작성한 서비스 기획서 전문, 기능 명세 또는 비즈니스 아이디어 텍스트입니다."
+      },
+      "target_market": {
+        "type": "string",
+        "description": "해당 서비스가 목표로 하는 주요 사용자 층이나 시장 카테고리(예: 20대 사회초년생, 핀테크 시장 등)입니다."
+      },
+      "intensity": {
+        "type": "string",
+        "enum": ["gentle", "critical", "destructive"],
+        "default": "critical",
+        "description": "비판의 수위를 결정합니다. gentle은 부드러운 조언, critical은 예리한 지적, destructive는 근본적인 해체 분석입니다."
+      },
+      "ethical_check": {
+        "type": "boolean",
+        "default": true,
+        "description": "사용자 데이터 보호나 서비스의 윤리적 문제점을 검토 대상에 포함할지 여부입니다."
+      }
+    },
+    "required": ["context"]
+  },
+  "instruction_reference": "product_lead.md"
+}
