@@ -4,10 +4,10 @@
 >
 > 로스터가 Antigravity에 "오늘 주문 정리해줘" 한 마디로 각 매장의 Google Sheets 주문을 자동 집계·리포트합니다.
 
-[![설계 버전](https://img.shields.io/badge/설계-v6%20(최종)-brightgreen)]()
-[![문서량](https://img.shields.io/badge/문서-3,000+%20줄-blue)]()
-[![토론 라운드](https://img.shields.io/badge/토론-50+%20라운드-orange)]()
-[![교차검증](https://img.shields.io/badge/교차검증-15개%20항목-purple)]()
+[![설계 버전](https://img.shields.io/badge/버전-v7%20(구현완료)-brightgreen)]()
+[![문서량](https://img.shields.io/badge/문서-3,500+%20줄-blue)]()
+[![토론 라운드](https://img.shields.io/badge/토론-60+%20라운드-orange)]()
+[![교차검증](https://img.shields.io/badge/교차검증-17개%20항목-purple)]()
 
 ---
 
@@ -23,7 +23,7 @@
 - [교차검증 체계](#-교차검증-체계)
 - [테스트 전략](#-테스트-전략)
 - [로드맵](#-로드맵)
-- [시작하기](#-시작하기)
+- [설치 및 실행](#-설치-및-실행)
 - [관련 문서](#-관련-문서)
 
 ---
@@ -260,6 +260,7 @@ blackup_bean_order/
 
 ### v1.5 (단기)
 
+- **Shipping Manager** (송장 입력 + 수령 확인)
 - 리포트를 공유 Google Docs에 자동 기록
 - 비상용 간이 집계 스크립트 (DR 대비)
 - 리포트 섹션별 on/off 옵션
@@ -276,7 +277,7 @@ blackup_bean_order/
 
 ---
 
-## 🚀 시작하기
+## 🚀 설치 및 실행
 
 ### 전제 조건
 
@@ -307,14 +308,10 @@ blackup_bean_order/
 - ✅ 리포트 템플릿
 - ✅ 골든 테스트 셋 3종
 - ✅ 대화형 설정 변경 (YAML 직접 편집 불필요)
+- ✅ 설치 가이드 & 사용자 매뉴얼
+- ✅ Google Sheets 템플릿 가이드
 
-**⏭️ 다음 단계:**
-
-1. Google Sheets 생성 (매장별) + 데이터 입력
-2. settings.yaml에 실제 URL 등록 (에이전트에게 대화로 요청)
-3. 골든 테스트 실행 → 검증
-4. 실제 데이터로 UAT
-5. 운영 시작
+자세한 설치 방법은 [설치 가이드](docs/setup_guide.md)를 참고하세요.
 
 ---
 
@@ -340,5 +337,5 @@ blackup_bean_order/
 ---
 
 **Last Updated**: 2026-02-16
-**Version**: v6 (최종 설계)
-**Status**: 🟡 구현 완료 / 테스트 대기
+**Version**: v7 (구현/문서화 완료)
+**Status**: 🟢 배포 준비 완료 (Ready for Deployment)
