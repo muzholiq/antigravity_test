@@ -1,0 +1,36 @@
+{
+  "name": "tech_architecture_audit",
+  "description": "기술 설계도나 아키텍처 명세를 분석하여 시스템의 안정성, 확장성, 보안 및 구현 난이도를 비판적으로 검증합니다.",
+  "command": "/tech-review",
+  "trigger_phrases": ["기술 검토해줘", "아키텍처 분석", "시스템 설계 비판", "확장성 점검"],
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "spec": {
+        "type": "string",
+        "description": "검토가 필요한 기술 아키텍처 설명, 데이터베이스 스키마, 또는 개발 사양서 전문입니다."
+      },
+      "expected_traffic": {
+        "type": "string",
+        "description": "시스템이 견뎌야 하는 트래픽 규모입니다. (예: 1,000만 DAU, 초당 5,000건 요청 등)"
+      },
+      "tech_stack": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "현재 사용 중이거나 고려 중인 프로그래밍 언어, 프레임워크, DB 등의 기술 목록입니다."
+      },
+      "intensity": {
+        "type": "string",
+        "enum": ["gentle", "critical", "destructive"],
+        "default": "critical",
+        "description": "기술적 비판의 강도입니다."
+      },
+      "sla_requirement": {
+        "type": "string",
+        "description": "보장해야 하는 서비스 수준 협약(SLA) 지표입니다. (예: 99.99% 가동률)"
+      }
+    },
+    "required": ["spec"]
+  },
+  "instruction_reference": "tech_lead.md"
+}

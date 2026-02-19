@@ -1,0 +1,27 @@
+{
+  "name": "roaster_feedback",
+  "description": "커피 로스터 입장에서 기획안의 실용성, 사용성 및 현장 도입 가치를 검토하고 실제 현장에서 필요한 아이디어를 제안합니다.",
+  "command": "/customer-review",
+  "trigger_phrases": ["로스터 의견 들어보자", "실제 사용자가 좋아할까?", "현장에서 쓸 수 있어?", "고객 검토"],
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "proposal": {
+        "type": "string",
+        "description": "기획자나 엔지니어가 작성한 서비스 기획서 또는 기능 설명서입니다."
+      },
+      "roastery_type": {
+        "type": "string",
+        "enum": ["Micro-roastery", "Industrial-scale", "Home-roaster"],
+        "default": "Micro-roastery",
+        "description": "검토를 진행할 로스터의 사업 규모입니다."
+      },
+      "current_pain_point": {
+        "type": "string",
+        "description": "현재 로스터가 겪고 있는 가장 큰 어려움(예: 생두 재고 관리, 프로파일 일관성 등)입니다."
+      }
+    },
+    "required": ["proposal"]
+  },
+  "instruction_reference": "roaster_customer.md"
+}

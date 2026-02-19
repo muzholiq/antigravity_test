@@ -1,0 +1,35 @@
+{
+  "name": "ai_modeling_audit",
+  "description": "도입하려는 머신러닝 및 LLM 기술의 타당성, 모델 구조의 효율성, 그리고 사용자 만족도와 시스템 안정성 사이의 균형을 전문적으로 검토합니다.",
+  "command": "/ai-review",
+  "trigger_phrases": ["AI 모델링 검토해줘", "LLM 도입 분석", "머신러닝 아키텍처 비판", "모델 성능 점검"],
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "context": {
+        "type": "string",
+        "description": "AI 기술을 도입하려는 기획안이나 해결하고자 하는 비즈니스 문제의 상세 내용입니다."
+      },
+      "model_type": {
+        "type": "string",
+        "description": "사용을 고려 중인 모델의 종류입니다. (예: GPT-4, Llama-3, 전용 분류 모델 등)"
+      },
+      "intensity": {
+        "type": "string",
+        "enum": ["gentle", "critical", "destructive"],
+        "default": "critical",
+        "description": "모델링 전략에 대한 비판 수위를 결정합니다."
+      },
+      "constraints": {
+        "type": "object",
+        "properties": {
+          "latency_limit": { "type": "string", "description": "허용 가능한 최대 응답 시간(예: 500ms 이내)" },
+          "budget_limit": { "type": "string", "description": "인프라 또는 토큰 비용 예산 제약" }
+        },
+        "description": "시스템 안정성 및 비용 측면에서의 제약 조건들입니다."
+      }
+    },
+    "required": ["context"]
+  },
+  "instruction_reference": "modeling_lead.md"
+}

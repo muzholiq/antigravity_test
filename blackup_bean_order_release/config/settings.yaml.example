@@ -1,0 +1,85 @@
+# ============================================================
+# 블랙업 커피 로스터스 — 원두 주문 관리 설정 (스키마 참고용 예시)
+# ============================================================
+# 이 파일은 settings.yaml의 구조를 보여주는 참고 문서입니다.
+# 실제 설정 파일(settings.yaml)은 에이전트가 자동 생성·관리합니다.
+#
+# 처음 시작할 때: 에이전트에게 "주문 관리 시작할게"라고 말하세요.
+# 에이전트가 대화를 통해 매장 정보, 원두 목록을 수집하고 자동으로 설정합니다.
+# ============================================================
+version: 1
+
+# --- 로스터리 정보 ---
+roastery:
+  name: "블랙업 커피 로스터스"
+  code: "BLACKUP"
+
+# --- 매장 목록 (매장별 별도 Google Sheets) ---
+# ⚠️ sheet_url의 SHEET_ID 부분을 실제 Google Sheets ID로 교체하세요.
+# Sheets URL 예시: https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms
+#
+# 2026-02 기준 블랙업 전 매장 (10개):
+# 부산 5: 로스터리(RST), 서면본점(SM), 해운대(HD), 을숙도(ESD), 롯데광복(LGR)
+# 경남 3: 양산(YS), 거제수월(GSW), 고현(GH)
+# 울산 2: 울산옥동(UOD), 울산현대백화점(UHD)
+stores:
+  - name: "로스터리"
+    code: "RST"
+    sheet_url: "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_HERE"
+    zone: "부산진구"
+    address: "부산진구 신천대로 108"
+
+  - name: "서면 본점"
+    code: "SM"
+    sheet_url: "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_HERE"
+    zone: "부산진구"
+    address: "부산진구 서전로10번길 41"
+
+  # 매장을 추가하려면 아래 형식을 복사하세요:
+  # - name: "새 매장명"
+  #   code: "XX"
+  #   sheet_url: "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_HERE"
+  #   zone: "XX구"
+  #   address: "상세 주소"
+
+# --- 원두 마스터 목록 ---
+# stock_kg: 현재 가용 재고 (로스팅 전 생두 기준)
+# cost_per_kg: 생두 원가 (₩). enable_cost_report: true일 때만 리포트에 노출
+beans:
+  - name: "에티오피아 예가체프"
+    name_en: "Ethiopia Yirgacheffe"
+    code: "ETH-YRG"
+    stock_kg: 30
+    cost_per_kg: 25000
+
+  - name: "콜롬비아 수프리모"
+    name_en: "Colombia Supremo"
+    code: "COL-SUP"
+    stock_kg: 15
+    cost_per_kg: 22000
+
+  # 원두를 추가하려면 아래 형식을 복사하세요:
+  # - name: "원두 한글명"
+  #   name_en: "Bean English Name"
+  #   code: "XXX-YYY"
+  #   stock_kg: 0
+  #   cost_per_kg: 0
+
+# --- 로스팅 프로파일 매핑 ---
+roasting_profiles:
+  라이트: "L-STD"
+  미디엄: "M-STD"
+  다크: "D-STD"
+
+# --- 글로벌 설정 ---
+min_lead_days: 2          # 최소 로스팅 리드타임 (일)
+max_order_kg: 50          # 단일 주문 이상치 임계값 (kg)
+read_only: true           # 에이전트 읽기 전용 원칙
+
+enable_cost_report: false # 원가 리포트 활성화 (true: 관리자 전용)
+
+# --- 출력할 리포트 종류 ---
+reports:
+  - daily_summary
+  - bean_totals
+  - delivery_schedule
