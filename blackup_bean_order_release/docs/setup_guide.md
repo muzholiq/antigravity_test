@@ -10,27 +10,28 @@
 
 - **OS**: macOS (권장) 또는 Linux/Windows
 - **Python**: 3.9 이상
-- **Google Chrome**: 최신 버전 (브라우저 자동화를 위해 필요)
-- **Google 계정**: Google Sheets 생성 및 접근용
+- **Google Service Account**: `service_account.json` 키 파일 (Google Cloud Console에서 생성)
+- **Google Sheets**: 데이터베이스용
 
 ---
 
 ## 2. 프로젝트 설정
 
-### 2.1 저장소 클론 (Clone Repository)
+### 2.1 폴더 배치 (Installation)
 
-```bash
-git clone https://github.com/your-username/antigravity_test.git
-cd antigravity_test/blackup_bean_order
-```
+배포받은 `blackup_bean_order` 폴더를 원하는 위치(바탕화면, 문서 폴더 등)에 두세요.
 
-### 2.2 설정 파일 준비
+### 2.2 인증 키 설정 (Authentication)
 
-기본 설정 파일을 복사하여 실제 환경에 맞게 수정합니다.
+1. **Google Cloud Console**에서 서비스 계장(Service Account)을 생성합니다.
+2. 키(Key)를 **JSON** 형식으로 다운로드합니다.
+3. 다운로드한 파일을 `service_account.json`으로 이름을 바꿉니다.
+4. 이 파일을 `config/` 폴더 안에 넣습니다.
+   - 경로: `blackup_bean_order/config/service_account.json`
 
-```bash
-cp config/settings_example.yaml config/settings.yaml
-```
+### 2.3 설정 파일 준비
+
+`config/settings.yaml` 파일이 이미 존재합니다. 필요 시 내용을 수정하세요:
 
 `config/settings.yaml` 파일을 열어 다음 내용을 수정하세요(또는 에이전트에게 요청하세요):
 - **roastery**: 로스터리 이름 및 코드
@@ -100,6 +101,6 @@ cp config/settings_example.yaml config/settings.yaml
 
 ## 5. 문제 해결 (Troubleshooting)
 
-- **브라우저가 열리지 않아요**: Chrome이 설치되어 있는지 확인하세요.
-- **시트 데이터를 못 읽어요**: `settings.yaml`의 URL이 정확한지, 시트의 공유 권한이 올바른지 확인하세요.
+- **인증 오류**: `config/service_account.json` 파일이 있는지 확인하세요.
+- **시트 권한**: 해당 구글 시트가 서비스 계정 이메일(client_email)에게 `Editor`로 공유되었는지 확인하세요.
 - **주문이 누락돼요**: 시트의 `주문일` 형식이 `YYYY-MM-DD`인지 확인하세요.
